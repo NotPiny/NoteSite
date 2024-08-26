@@ -124,8 +124,15 @@ export async function readJSON() {
         sessionStorage.setItem('n', messageContent) // Save the message for later use
 
         // Decrypt message
-        const decrypted = await decrypt(JSON.parse(messageContent), data.key)
-        return decrypted
+        try {
+            const decrypted = await decrypt(JSON.parse(messageContent), data.key)
+            return decrypted
+        } catch(e) {
+            const option = confirm('The message could not be decrypted. Would you like to try some actions to fix this?')
+            if (option) {
+                location.href = '/Extra/Actions' // Redirect to the actions page for wiping the data or whatever
+            }
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 <script>
     import { browser } from "$app/environment";
-    import { editJSON } from "$lib/tools";
+    import { editJSON, readJSON } from "$lib/tools";
 
     async function deleteAllNotes() {
         if (!browser) return;
@@ -21,6 +21,14 @@
     
     <button on:click={()=>{deleteAllNotes()}}>
         Delete all notes
+    </button>
+
+    <button on:click={async()=>{
+        if (!browser) return;
+        sessionStorage.removeItem('n'); // If this is missing the notes will be fetched from the api
+        alert("Cache has been cleared.");
+    }}>
+        Clear cache
     </button>
 </main>
 
